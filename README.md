@@ -107,7 +107,6 @@ spring.datasource.url=jdbc:mysql://localhost:3306/employee_security
 spring.datasource.username=root
 spring.datasource.password=root
 spring.jpa.hibernate.ddl-auto=update
-
 ---
 
 Technologies Used
