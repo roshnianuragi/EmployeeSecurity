@@ -1,170 +1,153 @@
-Employee Security System (Spring Boot + Spring Security)
-
-Overview
-
-This is a Spring Boot based Employee Management System that demonstrates secure authentication and authorization using Spring Security. The system implements role-based access control (RBAC) where users are categorized as ADMIN and USER. Access to APIs and UI pages is restricted based on assigned roles.
-
-The application provides REST APIs along with a Thymeleaf-based frontend for managing employee data securely.
+# EMPLOYEE SECURITY SYSTEM  
+## Spring Boot + Spring Security (RBAC Implementation)
 
 ---
 
-Key Features
+## Overview
 
-Authentication and Authorization
+Employee Security System is a Spring Boot based enterprise-level application designed to demonstrate secure authentication and authorization using Spring Security.
+
+The system implements Role-Based Access Control (RBAC), where users are categorized into ADMIN and USER roles. Based on these roles, access to APIs and UI pages is restricted.
+
+The application provides both REST APIs and a Thymeleaf-based frontend for managing employee data securely in a structured and protected environment.
+
+This project focuses on real-world security implementation, layered architecture, and proper separation of concerns.
+
+---
+
+## Core Concept (Theory)
+
+This project is built on the concept of Spring Security, which is a powerful authentication and authorization framework in Spring Boot.
+
+### Authentication
+Authentication is the process of verifying the identity of a user using email and password stored in the database.
+
+### Authorization
+Authorization determines what actions a user is allowed to perform based on their assigned role (ADMIN or USER).
+
+### Role-Based Access Control (RBAC)
+RBAC ensures that:
+- ADMIN users have full access to system operations
+- USER roles have limited access to view and update data only
+
+---
+
+## Key Features
+
+### Authentication and Authorization
 - Secure login system using Spring Security
-- Role-based access control (ADMIN and USER)
 - Custom login page implementation
 - Logout functionality
-- Password encryption using BCrypt
+- Password encryption using BCryptPasswordEncoder
+- Database-based authentication using UserDetailsService
 
-Employee Management System
+### Role-Based Access Control
+- ADMIN role: Full system access including delete operations
+- USER role: Limited access to view and update data
+- URL-level security configuration
+
+### Employee Management System
 - Add new employee (public access)
-- View all employees (USER and ADMIN access)
-- Update employee details (USER and ADMIN access)
-- Delete employee (ADMIN only access)
+- View all employees (USER + ADMIN)
+- Update employee details (USER + ADMIN)
+- Delete employee (ADMIN only)
 
-Web Interface (Thymeleaf)
+### Web Interface (Thymeleaf)
 - Login page for authentication
-- Dashboard page after login
+- Dashboard after login
 - Employee listing page
-- Admin panel for restricted access
-
-Security Implementation
-- Custom UserDetailsService for loading user data from database
-- Role-based URL protection using Spring Security configuration
-- BCryptPasswordEncoder for secure password storage
-- Secure authentication and authorization flow
+- Admin control panel
 
 ---
 
-Project Architecture
+## Project Architecture (Layered Structure)
 
-The project follows a layered architecture:
+The project follows a standard 4-layer architecture:
 
-Controller Layer
-- Handles HTTP requests
-- EmployeeController: REST APIs for employee operations
-- ViewController: Handles UI pages (login, dashboard, admin panel)
+### 1. Controller Layer
+Responsible for handling HTTP requests and responses.
 
-Service Layer
-- Contains business logic
-- EmployeeService: Handles CRUD operations
-- CustomUserDetailsService: Loads user details for authentication
-
-Repository Layer
-- EmployeeRepository: Spring Data JPA repository for database operations
-
-Model Layer
-- Employee entity represents database table structure
-- Fields: id, name, email, password, salary, role, department
-
-Security Layer
-- SecurityConfig: Defines security rules and access control
-- SecurityUser: Implements UserDetails for Spring Security integration
+- EmployeeController → REST APIs for employee operations
+- ViewController → Handles UI pages like login, dashboard, admin panel
 
 ---
 
-System Workflow
+### 2. Service Layer
+Contains business logic and processing rules.
+
+- EmployeeService → Handles CRUD operations for Employee
+- CustomUserDetailsService → Loads user details for Spring Security authentication
+
+---
+
+### 3. Repository Layer
+Handles database communication.
+
+- EmployeeRepository → Extends JpaRepository for database operations
+
+---
+
+### 4. Model Layer
+Represents database structure.
+
+- Employee Entity:
+  - id
+  - name
+  - email
+  - password
+  - salary
+  - role
+  - departmentName
+
+---
+
+### 5. Security Layer
+Handles authentication and authorization logic.
+
+- SecurityConfig → Defines security rules and access permissions
+- SecurityUser → Implements UserDetails for Spring Security integration
+
+---
+
+## System Workflow
 
 1. User opens login page
 2. User enters email and password
-3. Spring Security intercepts the request
-4. CustomUserDetailsService loads user details from database
-5. Password is verified using BCrypt
-6. User role is assigned (ADMIN or USER)
-7. Access is granted based on role permissions:
-   - ADMIN: Full access
-   - USER: Limited access
-8. User navigates through allowed modules
+3. Request is intercepted by Spring Security filter chain
+4. CustomUserDetailsService fetches user data from database
+5. Password is validated using BCrypt
+6. Role is assigned (ADMIN or USER)
+7. Access control is applied based on role
+8. User accesses allowed pages and APIs
 
 ---
 
-API Endpoints
+## API Endpoints
 
-Public Access
+### Public Access
 - POST /public/add → Add new employee
 
-User and Admin Access
-- GET /user/employees → Get all employees
-- GET /user/employees/{id} → Get employee by ID
+### User and Admin Access
+- GET /user/employees → Fetch all employees
+- GET /user/employees/{id} → Fetch employee by ID
 - PUT /user/employees/{id} → Update employee
 
-Admin Only Access
+### Admin Only Access
 - DELETE /admin/employees/{id} → Delete employee
 
 ---
 
-Database Configuration
+## Database Configuration
 
-The project uses MySQL database.
+The project uses MySQL database for data persistence.
 
-Database Name:
+### Database Name
 employee_security
 
-Configuration:
+### Configuration
 
+```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/employee_security
 spring.datasource.username=root
 spring.datasource.password=root
 spring.jpa.hibernate.ddl-auto=update
-
----
-
-Technologies Used
-
-- Java 21
-- Spring Boot
-- Spring Security
-- Spring Data JPA
-- Thymeleaf
-- MySQL
-- Maven
-
----
-
-Security Flow
-
-Spring Security works in the following sequence:
-
-1. Request enters application
-2. Security filter chain processes request
-3. Authentication is performed using database credentials
-4. Password is validated using BCrypt
-5. Roles are fetched from database
-6. Authorization rules are applied
-7. Access is granted or denied based on configuration
-
----
-
-How to Run the Project
-
-1. Clone the repository from GitHub
-2. Create MySQL database named employee_security
-3. Update application.properties with database credentials
-4. Run the Spring Boot application
-5. Open browser and visit:
-   http://localhost:8080/login
-
----
-
-Future Enhancements
-
-- JWT based authentication
-- Password reset functionality
-- Role management UI
-- Advanced admin dashboard
-- Audit logging system
-- Frontend upgrade using React
-
----
-
-Author
-
-Roshni Anuragi  
-B.Tech Graduate | Java Developer
-
----
-
-Conclusion
-
-This project demonstrates a real-world implementation of Spring Security with role-based access control, authentication, and authorization. It shows how enterprise-level security can be implemented in a Spring Boot application using a clean layered architecture.
