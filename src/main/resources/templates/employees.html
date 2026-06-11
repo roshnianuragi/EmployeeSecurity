@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Employees</title>
+
+<style>
+body {
+	margin: 0;
+	font-family: Arial;
+	background: #f4f4f4;
+}
+
+.container {
+	text-align: center;
+	margin-top: 50px;
+}
+
+/* TABLE CENTER */
+table {
+	margin: auto;
+	border-collapse: collapse;
+	background: white;
+}
+
+th, td {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+th {
+	background: #007bff;
+	color: white;
+}
+
+/* BUTTON */
+a {
+	display: inline-block;
+	margin-top: 20px;
+	padding: 10px 15px;
+	background: green;
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+}
+</style>
+
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h2>Employee List</h2>
+
+		<table>
+
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Salary</th>
+				<th>Role</th>
+				<th>Department</th>
+			</tr>
+
+			<tr th:each="emp : ${employees}">
+				<td th:text="${emp.id}"></td>
+				<td th:text="${emp.name}"></td>
+				<td th:text="${emp.email}"></td>
+				<td th:text="${emp.salary}"></td>
+				<td th:text="${emp.role}"></td>
+				<td th:text="${emp.departmentName}"></td>
+			</tr>
+
+		</table>
+
+		<a href="/dashboard">Back To Dashboard</a>
+
+	</div>
+
+</body>
+</html>
